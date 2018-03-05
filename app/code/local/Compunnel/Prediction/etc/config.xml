@@ -1,0 +1,24 @@
+<?xml version="1.0"?>
+<config>
+	<modules>
+		<Compunnel_Prediction>
+			<version>1.0.0.0</version>
+		</Compunnel_Prediction>
+	</modules>
+	<global>
+		<helpers>
+			<prediction>
+				<class>Compunnel_Prediction_Helper</class>
+			</prediction>
+		</helpers>
+	</global>
+	<frontend>
+		<layout>
+			<updates>
+				<prediction>
+					<file>compunnel/prediction.xml</file>
+				</prediction>
+			</updates>
+		</layout>
+	</frontend>
+</config>
