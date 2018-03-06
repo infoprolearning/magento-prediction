@@ -38,6 +38,33 @@ var predictionioUX = {
 				}
 			});
 	},
+
+	catalogProductView: function() {
+		new Ajax.Request(
+			this.recommendationURL,
+			{
+				method:'get',
+				parameters: {location:'product'},
+				onSuccess: function(response) {
+					var textContainer = $$('div.promo-home-content')[0];
+					$(textContainer).insert(response.responseText);
+				}
+			});
+	},
+
+	checkoutCartIndex: function() {
+		new Ajax.Request(
+			this.recommendationURL,
+			{
+				method:'get',
+				parameters: {location:'cart'},
+				onSuccess: function(response) {
+					var textContainer = $$('div.promo-home-content')[0];
+					$(textContainer).insert(response.responseText);
+				}
+			});
+	},
+
 };
 
 // End of Prediction Library

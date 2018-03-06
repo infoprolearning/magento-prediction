@@ -1,5 +1,6 @@
 <?xml version="1.0"?>
 <layout>
+
 	<default translate="label">
 		<reference name="head">
 			<action method="addJs"><script>compunnel/prediction/default.js</script></action>
@@ -14,4 +15,17 @@
 		<remove name="left"/>
 		<block type="prediction/recommendations_home" name="root" output="toHtml" template="compunnel/recommendations/home.phtml" />
 	</prediction_index_block_home>
+
+	<prediction_index_block_product>
+		<remove name="right"/>
+		<remove name="left"/>
+		<block type="prediction/recommendations_product" name="root" output="toHtml" template="compunnel/recommendations/product.phtml" />
+	</prediction_index_block_product>
+
+	<prediction_index_block_cart>
+		<remove name="right"/>
+		<remove name="left"/>
+		<block type="prediction/recommendations_cart" name="root" output="toHtml" template="compunnel/recommendations/cart.phtml" />
+	</prediction_index_block_cart>
+
 </layout>
