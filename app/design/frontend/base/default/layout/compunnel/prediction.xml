@@ -4,7 +4,7 @@
 		<reference name="head">
 			<action method="addJs"><script>compunnel/prediction/default.js</script></action>
 		</reference>
-		<reference name="bottom.container">
+		<reference name="before_body_end">
 			<block type="core/template" before="-" name="defaul_prediction_area" template="compunnel/base.phtml" />
 		</reference>
 	</default>
