@@ -27,7 +27,16 @@ var predictionioUX = {
 
 
 	cmsIndexIndex: function () {
-		console.log(this.recommendationURL);
+		new Ajax.Request(
+			this.recommendationURL,
+			{
+				method:'get',
+				parameters: {location:'home'},
+				onSuccess: function(response) {
+					var textContainer = $$('div.promo-home-content')[0];
+					$(textContainer).insert(response.responseText);
+				}
+			});
 	},
 };
 
