@@ -11,6 +11,11 @@
 				<class>Compunnel_Prediction_Helper</class>
 			</prediction>
 		</helpers>
+		<blocks>
+			<prediction>
+				<class>Compunnel_Prediction_Block</class>
+			</prediction>
+		</blocks>
 	</global>
 	<frontend>
 		<layout>
@@ -20,5 +25,14 @@
 				</prediction>
 			</updates>
 		</layout>
+		<routers>
+			<prediction>
+				<use>standard</use>
+				<args>
+					<module>Compunnel_Prediction</module>
+					<frontName>prediction</frontName>
+				</args>
+			</prediction>
+		</routers>
 	</frontend>
 </config>

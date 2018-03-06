@@ -5,4 +5,10 @@
 			<action method="addJs"><script>compunnel/prediction/default.js</script></action>
 		</reference>
 	</default>
+
+	<prediction_index_block_home>
+		<remove name="right"/>
+		<remove name="left"/>
+		<block type="prediction/recommendations_home" name="root" output="toHtml" template="compunnel/recommendations/home.phtml" />
+	</prediction_index_block_home>
 </layout>
