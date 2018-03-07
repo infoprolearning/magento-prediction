@@ -8,6 +8,6 @@ insert_final_newline = true
 trim_trailing_whitespace = true
 
 # 4 space indentation for php files
-[*.php]
+[{*.php,*.phtml,*.xml}]
 indent_style = space
 indent_size = 4
