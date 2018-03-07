@@ -1,1 +1,105 @@
-<?php echo "demo block"; ?>
+<?php
+    $_productCollection=$this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): return; endif; ?>
+<div class="category-products block-highlight <?php echo $this->getClassName() ?>">
+    <div class="block-title">
+        <span><?php echo $this->__($this->getTitle()) ?></span>
+    </div>
+    <div class="block-content">
+        <div class="slide-containor" id="<?php echo $this->getClassName() ?>">
+            <a href="javascript:void(0)" class="prev"> Prev </a>
+            <a href="javascript:void(0)" class="prev-dis"> Prev </a>
+            <?php
+                $_collectionSize = $_productCollection->count();
+                $_columnCount = $this->getColumnCount();
+                $i = 0;
+            ?>
+            <?php foreach ($_productCollection as $_product): ?>
+                <?php
+                    $currentstamp = strtotime(date('Y-m-d'));
+                    $publishstamp = strtotime($_product->getLepubdate());
+                ?>
+                <?php if ($i++%$_columnCount==0): ?>
+                    <ul class="products-grid">
+                <?php endif ?>
+                <li class="item<?php if(($i-1)%$_columnCount==0): ?> first<?php elseif($i%$_columnCount==0): ?> last<?php endif; ?>">
+                    <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" class="product-image">
+                        <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(true)->keepAspectRatio(false)->keepFrame(false)->resize(null,145) ?>"  height="145" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true) ?>" />
+                    </a>
+                    <?php if ($_product->getCover()):?>
+                        <span class="covertype">
+                            <?php
+                                $cover =  $_product->getCover();
+                                $coverArr = explode('/',$cover);
+                                if(count($coverArr)>1) {
+                                    echo $this->__($coverArr[1]);
+                                }
+                            ?>
+                        </span>
+                    <?php endif; ?>
+                    <?php
+                        $_price =  Mage::helper('core')->currency($_product->getPrice(),false,false);
+                        $_finalPrice =  Mage::helper('core')->currency($_product->getFinalPrice(),false,false);
+                    ?>
+                    <?php if($_finalPrice < $_price): ?>
+                        <?php $_savePercent = 100 - round(($_finalPrice / $_price)*100); ?>
+                        <span class="discountper"><?php echo $_savePercent." ".$this->__('% off'); ?></span>
+                    <?php endif; ?>
+                    <h2 class="product-name">
+                        <a href="<?php echo $_product->getProductUrl() ?>" title="<?php echo $this->stripTags($_product->getName(), null, true) ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></a>
+                    </h2>
+                    <?php if($_product->getRatingSummary()): ?>
+                        <?php echo $this->getReviewsSummaryHtml($_product, 'short') ?>
+                    <?php endif; ?>
+                    <?php echo $this->getPriceHtml($_product, true, $this->getPriceSuffix()) ?>
+                    <div class="actions">
+                        <?php if($_product->isSaleable()): ?>
+                            <?php if($publishstamp > $currentstamp): ?>
+                                <button type="button" title="<?php echo $this->__('Pre Order') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                    <span>
+                                        <span><?php echo $this->__('Pre Order') ?></span>
+                                    </span>
+                                </button>
+                            <?php else: ?>
+                                <button type="button" title="<?php echo $this->__('Add to Cart') ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product) ?>')">
+                                    <span>
+                                        <span><?php echo $this->__('Add to Cart') ?></span>
+                                    </span>
+                                </button>
+                            <?php endif; ?>
+                        <?php else: ?>
+                            <p class="availability out-of-stock"><span><?php echo $this->__('Out of stock') ?></span></p>
+                        <?php endif; ?>
+                    </div>
+                    <ul class="add-to-links">
+                        <?php if ($this->helper('wishlist')->isAllow()): ?>
+                            <li><a href="<?php echo $this->helper('wishlist')->getAddUrl($_product) ?>" class="link-wishlist"><span><?php echo $this->__('Add to Wishlist') ?></span></a></li>
+                        <?php endif; ?>
+                    </ul>
+                </li>
+                <?php if ($i%$_columnCount==0 || $i==$_collectionSize): ?>
+                    </ul>
+                <?php endif ?>
+            <?php endforeach ?>
+            <a href="javascript:void(0)" class="next"> next </a>
+            <a href="javascript:void(0)" class="next-dis"> next </a>
+        </div>
+        <script type="text/javascript">
+            decorateGeneric($$('ul.products-grid'), ['odd','even','first','last']);
+            var outerWdth = parseInt(jQuery('.slide-containor li').outerWidth())+5;
+            var width = parseInt(jQuery('.slide-containor li').width())+2;
+            jQuery('.slide-containor ul.products-grid > li').width(width);jQuery('.slide-containor ul.products-grid > li').css('padding-left',parseInt(width/30));
+            jQuery('.slide-containor ul.products-grid > li').css('padding-right',parseInt(width/30));
+            jQuery(document).ready(function() {
+                if(jQuery( window ).width() > 320 && jQuery( window ).width() < 750) {
+                    jQuery.fn.slider('<?php echo $_collectionSize;?>','3','<?php echo $this->getClassName() ?>','products-grid',outerWdth);
+                }
+                else {
+                    jQuery.fn.slider('<?php echo $_collectionSize;?>','5','<?php echo $this->getClassName() ?>','products-grid',outerWdth);
+                };
+            });
+        </script>
+    </div>
+</div>
