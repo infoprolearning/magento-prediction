@@ -10,22 +10,33 @@
 		</reference>
 	</default>
 
+    <prediction_index_block translate="label">
+        <remove name="right"/>
+        <remove name="left"/>
+        <reference name="root">
+            <action method="setTemplate"><template>page/1column.phtml</template></action>
+        </reference>
+    </prediction_index_block>
+
 	<prediction_index_block_home>
-		<remove name="right"/>
-		<remove name="left"/>
-		<block type="prediction/recommendations_home" name="root" output="toHtml" template="compunnel/recommendations/home.phtml" />
+		<update handle="prediction_index_block" />
+		<block type="prediction/recommendations_home" name="root" output="toHtml" template="compunnel/recommendations/home.phtml">
+            <action method="addColumnCount"><count>5</count></action>
+        </block>
 	</prediction_index_block_home>
 
 	<prediction_index_block_product>
-		<remove name="right"/>
-		<remove name="left"/>
-		<block type="prediction/recommendations_product" name="root" output="toHtml" template="compunnel/recommendations/product.phtml" />
+		<update handle="prediction_index_block" />
+		<block type="prediction/recommendations_product" name="root" output="toHtml" template="compunnel/recommendations/product.phtml">
+            <action method="addColumnCount"><count>5</count></action>
+        </block>
 	</prediction_index_block_product>
 
 	<prediction_index_block_cart>
-		<remove name="right"/>
-		<remove name="left"/>
-		<block type="prediction/recommendations_cart" name="root" output="toHtml" template="compunnel/recommendations/cart.phtml" />
+		<update handle="prediction_index_block" />
+		<block type="prediction/recommendations_cart" name="root" output="toHtml" template="compunnel/recommendations/cart.phtml">
+            <action method="addColumnCount"><count>5</count></action>
+        </block>
 	</prediction_index_block_cart>
 
 </layout>
