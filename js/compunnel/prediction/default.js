@@ -46,8 +46,10 @@ var predictionioUX = {
 				method:'get',
 				parameters: {location:'product'},
 				onSuccess: function(response) {
-					var textContainer = $$('div.promo-home-content')[0];
-					$(textContainer).insert(response.responseText);
+					var textContainer = $$('div.product-collateral')[0];
+					$(textContainer).insert({
+						before: response.responseText,
+						});
 				}
 			});
 	},
