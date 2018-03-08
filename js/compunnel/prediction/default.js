@@ -62,7 +62,7 @@ var predictionioUX = {
 				method:'get',
 				parameters: {location:'cart'},
 				onSuccess: function(response) {
-					var textContainer = $$('div.promo-home-content')[0];
+					var textContainer = $$('div.col1-set.totals-shipping')[0];
 					$(textContainer).insert(response.responseText);
 				}
 			});
