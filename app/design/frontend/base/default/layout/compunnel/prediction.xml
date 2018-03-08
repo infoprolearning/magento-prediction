@@ -36,7 +36,8 @@
 	<prediction_index_block_cart>
 		<update handle="prediction_index_block" />
 		<block type="prediction/recommendations_cart" name="root" output="toHtml" template="compunnel/recommendations/cart.phtml">
-            <action method="addColumnCount"><count>5</count></action>
+            <action method="addColumnCount"><count>1</count></action>
+            <action method="setProductsCount"><count>4</count></action>
         </block>
 	</prediction_index_block_cart>
 

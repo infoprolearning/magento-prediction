@@ -1,1 +1,67 @@
-<?php echo "demo block"; ?>
+<?php
+    $_productCollection = $this->getLoadedProductCollection();
+    $_helper = $this->helper('catalog/output');
+?>
+<?php if(!$_productCollection->count()): return; endif; ?>
+<div class="category-products block-highlight <?php echo $this->getClassName(); ?>">
+    <div class="block-title">
+        <span><?php echo $this->__($this->getTitle()); ?></span>
+    </div>
+    <div class="block-content">
+        <div class="slide-containor" id="<?php echo $this->getClassName(); ?>">
+            <ul>
+                <?php
+                    $_collectionSize = $_productCollection->count();
+                    $_columnCount = $this->getColumnCount();
+                    $i = 0;
+                ?>
+                <?php foreach($_productCollection as $_product): ?>
+                    <?php
+                        $currentstamp = strtotime(date('Y-m-d'));
+                        $publishstamp = strtotime($_product->getLepubdate());
+                    ?>
+                    <li class="item <?php if(($i-1) % $_columnCount == 0): ?>first<?php elseif($i % $_columnCount == 0): ?> last<?php endif; ?>" style="margin-bottom: 10px;height: 100px; ">
+                        <div class="column1" style="width: 30%;float: left;clear: both;">
+                            <a href="<?php echo $_product->getProductUrl(); ?>" title="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>" class="product-image">
+                                <img src="<?php echo $this->helper('catalog/image')->init($_product, 'small_image')->constrainOnly(true)->keepAspectRatio(false)->keepFrame(false)->resize(null,75); ?>" height="75" alt="<?php echo $this->stripTags($this->getImageLabel($_product, 'small_image'), null, true); ?>" />
+                            </a>
+                        </div>
+                        <div class="column2">
+                            <h2 class="product-name">
+                                <a href="<?php echo $_product->getProductUrl(); ?>" title="<?php echo $this->stripTags($_product->getName(), null, true); ?>"><?php echo $_helper->productAttribute($_product, $_product->getName(), 'name'); ?></a>
+                            </h2>
+                            <?php if($_product->getRatingSummary()): ?>
+                                <?php echo $this->getReviewsSummaryHtml($_product, 'short'); ?>
+                            <?php endif; ?>
+                            <?php echo $this->getPriceHtml($_product, true, $this->getPriceSuffix()); ?>
+                            <div class="actions">
+                                <?php if($_product->isSaleable()): ?>
+                                    <?php if($publishstamp > $currentstamp): ?>
+                                        <button type="button" title="<?php echo $this->__('Pre Order'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product); ?>')">
+                                            <span>
+                                                <span><?php echo $this->__('Pre Order'); ?></span>
+                                            </span>
+                                        </button>
+                                    <?php else: ?>
+                                        <button type="button" title="<?php echo $this->__('Add to Cart'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product); ?>')">
+                                            <span>
+                                                <span><?php echo $this->__('Add to Cart'); ?></span>
+                                            </span>
+                                        </button>
+                                    <?php endif; ?>
+                                <?php else: ?>
+                                    <p class="availability out-of-stock">
+                                        <span><?php echo $this->__('Out of stock'); ?></span>
+                                    </p>
+                                <?php endif; ?>
+                            </div>
+                        </div>
+                    </li>
+                <?php endforeach; ?>
+            </ul>
+        </div>
+        <script type="text/javascript">
+            decorateGeneric($$('ul.products-grid'), ['odd', 'even', 'first', 'last']);
+        </script>
+    </div>
+</div>
