@@ -13,12 +13,13 @@ var predictionioUX = {
 
 		jQuery(document).ready(function () {
 			var pageClasses = document.body.className.split(' ');
-			pageClasses.forEach(function(pageClass) {
+			pageClasses.some(function(pageClass) {
 				if (pageClass.trim() !== '') {
 					var camelizedPageClass = pageClass.toCamelCase();
 					if (predictionioUX[camelizedPageClass]) {
 						// ---- If the function exists, run it, otherwise, don't do anything. ---- //
 						predictionioUX[camelizedPageClass]();
+						return true;
 					}
 				}
 			});
