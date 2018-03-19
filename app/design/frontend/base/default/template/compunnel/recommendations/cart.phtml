@@ -4,11 +4,11 @@
 ?>
 <?php if(!$_productCollection->count()): return; endif; ?>
 <div class="category-products block-highlight <?php echo $this->getClassName(); ?>">
-    <div class="block-title">
+    <div class="block-title reccomend-cartTitle">
         <span><?php echo $this->__($this->getTitle()); ?></span>
     </div>
     <div class="block-content">
-        <div class="slide-containor" id="<?php echo $this->getClassName(); ?>">
+        <div class="slide-containor reccomend-boxCart" id="<?php echo $this->getClassName(); ?>">
             <ul>
                 <?php
                     $_collectionSize = $_productCollection->count();

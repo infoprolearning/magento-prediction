@@ -5,12 +5,17 @@
 <?php if(!$_productCollection->count()): return; endif; ?>
 <div class="category-products block-highlight <?php echo $this->getClassName(); ?>">
     <div class="block-title">
-        <span><?php echo $this->__($this->getTitle()); ?></span>
+
     </div>
     <div class="block-content">
-        <div class="slide-containor" id="<?php echo $this->getClassName(); ?>">
+        <div class="slide-containor reccomend_boxHld" id="<?php echo $this->getClassName(); ?>">
+        <div class="reccomend-title">
+                <span><?php echo $this->__($this->getTitle()); ?></span>
+        </div>
             <a href="javascript:void(0)" class="prev"><?php echo $this->__('Prev'); ?></a>
             <a href="javascript:void(0)" class="prev-dis"><?php echo $this->__('Prev'); ?></a>
+
+             <div class="recommend-box">
             <?php
                 $_collectionSize = $_productCollection->count();
                 $_columnCount = $this->getColumnCount();
@@ -89,6 +94,8 @@
                     </ul>
                 <?php endif; ?>
             <?php endforeach; ?>
+
+            </div>
             <a href="javascript:void(0)" class="next"><?php echo $this->__('next'); ?></a>
             <a href="javascript:void(0)" class="next-dis"><?php echo $this->__('next'); ?></a>
         </div>
