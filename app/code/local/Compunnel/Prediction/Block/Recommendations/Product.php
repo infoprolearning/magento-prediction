@@ -3,11 +3,11 @@
 
         protected function _construct() {
             parent::_construct();
-            $this->setTitle($this->__('Titles you might be interested in'));
+            $this->setTitle($this->__('Titles Based on Your History'));
         }
 
         protected function _getProductCollection() {
-            if (is_null($this->_productCollection)) {
+            if (is_null($this->_productCollection) && Mage::registry('product')) {
 
                 $data = array();
                 if (Mage::getSingleton('customer/session')->isLoggedIn()) {

@@ -2,7 +2,7 @@
     $_productCollection = $this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
 ?>
-<?php if(!$_productCollection->count()): return; endif; ?>
+<?php if(is_null($_productCollection) || !$_productCollection->count()): return; endif; ?>
 <div class="category-products block-highlight <?php echo $this->getClassName(); ?>">
     <div class="block-title reccomend-cartTitle">
         <span><?php echo $this->__($this->getTitle()); ?></span>

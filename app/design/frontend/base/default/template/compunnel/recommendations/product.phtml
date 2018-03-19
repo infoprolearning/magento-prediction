@@ -2,7 +2,7 @@
     $_productCollection = $this->getLoadedProductCollection();
     $_helper = $this->helper('catalog/output');
 ?>
-<?php if(!$_productCollection->count()): return; endif; ?>
+<?php if(is_null($_productCollection) || !$_productCollection->count()): return; endif; ?>
 <div class="category-products block-highlight <?php echo $this->getClassName(); ?>">
     <div class="block-title">
 
@@ -10,7 +10,7 @@
     <div class="block-content">
         <div class="slide-containor reccomend_boxHld" id="<?php echo $this->getClassName(); ?>">
         <div class="reccomend-title">
-                <span><?php echo $this->__($this->getTitle()); ?></span>
+            <span><?php echo $this->__($this->getTitle()); ?></span>
         </div>
             <a href="javascript:void(0)" class="prev"><?php echo $this->__('Prev'); ?></a>
             <a href="javascript:void(0)" class="prev-dis"><?php echo $this->__('Prev'); ?></a>

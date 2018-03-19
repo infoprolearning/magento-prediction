@@ -10,6 +10,7 @@ var predictionioUX = {
 		};
 
 		this.recommendationURL = urls.content;
+		this.baseproduct = urls.productid;
 
 		jQuery(document).ready(function () {
 			var pageClasses = document.body.className.split(' ');
@@ -45,7 +46,7 @@ var predictionioUX = {
 			this.recommendationURL,
 			{
 				method:'get',
-				parameters: {location:'product'},
+				parameters: {location:'product', product:this.baseproduct},
 				onSuccess: function(response) {
 					var textContainer = $$('div.product-collateral')[0];
 					$(textContainer).insert({

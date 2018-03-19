@@ -1,7 +1,8 @@
 <script type="text/javascript">
     //<![CDATA[
         predictionioUX.init({
-            content: '<?php echo $this->getUrl('prediction/index/index') ?>'
+            content: "<?php echo $this->getUrl('prediction/index/index') ?>",
+            productid: "<?php echo (Mage::registry('current_product') ? Mage::registry('current_product')->getId() : ''); ?>"
         });
     //]]>
 </script>
