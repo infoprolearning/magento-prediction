@@ -4,6 +4,8 @@
         protected function _construct() {
             parent::_construct();
             $this->setTitle($this->__('Titles Based on Your History'));
+            $this->_listingMedium = 'recommended';
+            $this->_listingSource = 'product';
         }
 
         protected function _getProductCollection() {

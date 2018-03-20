@@ -56,4 +56,13 @@
             $this->setData('column_count', $count);
         }
 
+        public function getProductUrl($_product) {
+            return Mage::getUrl('',
+                array(
+                    '_direct' => Mage::getModel('core/url_rewrite')->loadByIdPath('product/' . $_product->getId())->getRequestPath(),
+                    '_query' => array('cpsource' => $this->_listingSource, 'cpmedium' => $this->_listingMedium)
+                )
+            );
+        }
+
     }
