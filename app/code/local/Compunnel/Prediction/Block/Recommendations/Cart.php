@@ -3,7 +3,7 @@
 
         protected function _construct() {
             parent::_construct();
-            $this->setTitle($this->__('Titles Based on Your History'));
+            $this->setTitle($this->__('Complement your cart'));
             $this->_listingMedium = 'recommended';
             $this->_listingSource = 'cart';
         }

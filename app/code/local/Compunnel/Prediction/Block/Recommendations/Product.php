@@ -3,7 +3,7 @@
 
         protected function _construct() {
             parent::_construct();
-            $this->setTitle($this->__('Titles Based on Your History'));
+            $this->setTitle($this->__('Items you might be inrested in'));
             $this->_listingMedium = 'recommended';
             $this->_listingSource = 'product';
         }
@@ -12,10 +12,10 @@
             if (is_null($this->_productCollection) && Mage::registry('product')) {
 
                 $data = array();
-                if (Mage::getSingleton('customer/session')->isLoggedIn()) {
-                    $customerData = Mage::getSingleton('customer/session')->getCustomer();
-                    $data['user'] = $customerData->getId();
-                }
+                // if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+                //     $customerData = Mage::getSingleton('customer/session')->getCustomer();
+                //     $data['user'] = $customerData->getId();
+                // }
 
                 $product = Mage::registry('product');
 

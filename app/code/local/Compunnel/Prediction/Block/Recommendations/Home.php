@@ -3,7 +3,14 @@
 
         protected function _construct() {
             parent::_construct();
-            $this->setTitle($this->__('Titles Based on Your History'));
+
+            if (Mage::getSingleton('customer/session')->isLoggedIn()) {
+                $this->setTitle($this->__('Inspired by your purchases'));
+            }
+            else{
+                $this->setTitle($this->__('Inspired by your browing history'));
+            }
+
             $this->_listingMedium = 'recommended';
             $this->_listingSource = 'home';
         }
