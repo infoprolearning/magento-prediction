@@ -5,6 +5,9 @@
 
         public function makeRecommendationCall($data, $storeId = '')
         {
+            if (!$this->isModuleEnabled($storeId)) {
+                return;
+            }
             try {
                 $curlObject = new Varien_Http_Adapter_Curl();
                 $config = array(
