@@ -1,7 +1,8 @@
 <?php
-    class Compunnel_Prediction_IndexController extends Mage_Core_Controller_Front_Action {
-
-        public function indexAction() {
+    class Compunnel_Prediction_IndexController extends Mage_Core_Controller_Front_Action
+    {
+        public function indexAction()
+        {
             $location = $this->getRequest()->getParam('location', false);
 
             if (!$location) {
@@ -22,7 +23,8 @@
             return $output;
         }
 
-        protected function _initCurrentProduct() {
+        protected function _initCurrentProduct()
+        {
             $categoryId = (int) $this->getRequest()->getParam('category', false);
             $productId  = (int) $this->getRequest()->getParam('product');
 
@@ -31,5 +33,4 @@
 
             return Mage::helper('catalog/product')->initProduct($productId, $this, $params);
         }
-
     }

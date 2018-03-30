@@ -1,13 +1,13 @@
 <?php
-    class Compunnel_Prediction_Block_Recommendations_Home extends Compunnel_Prediction_Block_Recommendations_Abstract {
-
-        protected function _construct() {
+    class Compunnel_Prediction_Block_Recommendations_Home extends Compunnel_Prediction_Block_Recommendations_Abstract
+    {
+        protected function _construct()
+        {
             parent::_construct();
 
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $this->setTitle($this->__('Inspired by your purchases'));
-            }
-            else{
+            } else {
                 $this->setTitle($this->__('Inspired by your browing history'));
             }
 
@@ -15,9 +15,9 @@
             $this->_listingSource = 'home';
         }
 
-        protected function _getProductCollection() {
+        protected function _getProductCollection()
+        {
             if (is_null($this->_productCollection)) {
-
                 $data = array();
                 $data['num'] = 5;
                 if (Mage::getSingleton('customer/session')->isLoggedIn()) {
@@ -49,5 +49,4 @@
 
             return $this->_productCollection;
         }
-
     }

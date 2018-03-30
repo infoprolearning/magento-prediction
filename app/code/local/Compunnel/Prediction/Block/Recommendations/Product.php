@@ -1,16 +1,17 @@
 <?php
-    class Compunnel_Prediction_Block_Recommendations_Product extends Compunnel_Prediction_Block_Recommendations_Abstract {
-
-        protected function _construct() {
+    class Compunnel_Prediction_Block_Recommendations_Product extends Compunnel_Prediction_Block_Recommendations_Abstract
+    {
+        protected function _construct()
+        {
             parent::_construct();
             $this->setTitle($this->__('Items you might be inrested in'));
             $this->_listingMedium = 'recommended';
             $this->_listingSource = 'product';
         }
 
-        protected function _getProductCollection() {
+        protected function _getProductCollection()
+        {
             if (is_null($this->_productCollection) && Mage::registry('product')) {
-
                 $data = array();
                 // if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 //     $customerData = Mage::getSingleton('customer/session')->getCustomer();
@@ -48,5 +49,4 @@
 
             return $this->_productCollection;
         }
-
     }

@@ -1,16 +1,17 @@
 <?php
-    class Compunnel_Prediction_Block_Recommendations_Cart extends Compunnel_Prediction_Block_Recommendations_Abstract {
-
-        protected function _construct() {
+    class Compunnel_Prediction_Block_Recommendations_Cart extends Compunnel_Prediction_Block_Recommendations_Abstract
+    {
+        protected function _construct()
+        {
             parent::_construct();
             $this->setTitle($this->__('Complement your cart'));
             $this->_listingMedium = 'recommended';
             $this->_listingSource = 'cart';
         }
 
-        protected function _getProductCollection() {
+        protected function _getProductCollection()
+        {
             if (is_null($this->_productCollection)) {
-
                 $data = array();
                 $data['num'] = 5;
                 $data['itemSet'] = $this->_getCartProductIds();
@@ -40,7 +41,8 @@
             return $this->_productCollection;
         }
 
-        protected function _getCartProductIds() {
+        protected function _getCartProductIds()
+        {
             $ids = $this->getData('_cart_product_ids');
             if (is_null($ids)) {
                 $ids = array();
@@ -54,8 +56,8 @@
             return $ids;
         }
 
-        public function getQuote() {
+        public function getQuote()
+        {
             return Mage::getSingleton('checkout/session')->getQuote();
         }
-
     }
