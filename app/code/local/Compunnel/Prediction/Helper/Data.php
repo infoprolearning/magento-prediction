@@ -1,22 +1,32 @@
 <?php
     class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstract
     {
-        public function makeRecommendationCall($data)
+        const RECOMMENDATION_PORT = '8000';
+
+        public function makeRecommendationCall($data, $storeId = '')
         {
-            $ch = curl_init();
-            curl_setopt($ch, CURLOPT_URL, "http://52.55.22.136:8000/queries.json");
-            curl_setopt($ch, CURLOPT_RETURNTRANSFER, 1);
-            curl_setopt($ch, CURLOPT_POSTFIELDS, json_encode($data));
-            curl_setopt($ch, CURLOPT_POST, 1);
-            $headers = array();
-            $headers[] = "Content-Type: application/json";
-            curl_setopt($ch, CURLOPT_HTTPHEADER, $headers);
-            $result = curl_exec($ch);
-            curl_close($ch);
-            return $result;
+            try {
+                $curlObject = new Varien_Http_Adapter_Curl();
+                $config = array(
+                    'timeout' => 10,
+                    'header' => false
+                    );
+                $curlObject->setConfig($config);
+                $headers = array();
+                $headers[] = "Content-Type: application/json";
+
+                $curlObject->write(Zend_Http_Client::POST, $this->getRecommendationUrl($storeId), '1.1', $headers, json_encode($data));
+                $result = $curlObject->read();
+                $curlObject->close();
+                return $result;
+            }
+            catch(Exception $e) {
+                Mage::logException($e);
+            }
         }
 
-        protected function getRecommendationUrl()
+        protected function getRecommendationUrl($storeId = '')
         {
+            return $this->getEngineUrl($storeId) . ':' . self::RECOMMENDATION_PORT . '/queries.json';
         }
     }
