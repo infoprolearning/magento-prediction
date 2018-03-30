@@ -28,8 +28,17 @@
             }
         }
 
+        public function isVisitorNew()
+        {
+            return Mage::getSingleton('prediction/visitor')->isVisitorSessionNew();
+        }
+
         protected function getRecommendationUrl($storeId = '')
         {
             return $this->getEngineUrl($storeId) . ':' . self::RECOMMENDATION_PORT . '/queries.json';
+        }
+
+        public function getNoOfRecommendations($location, $storeId = '') {
+            return $this->getRecommendationQty($location, $storeId);
         }
     }

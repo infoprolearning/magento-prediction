@@ -7,8 +7,15 @@
 
             if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                 $this->setTitle($this->__('Inspired by your purchases'));
-            } else {
-                $this->setTitle($this->__('Inspired by your browing history'));
+                $this->setTitle(Mage::helper('prediction')->getHomeTitleCustomer());
+            }
+            else {
+                if (Mage::helper('prediction')->isVisitorNew()) {
+                    $this->setTitle(Mage::helper('prediction')->getHomeTitleGuest());
+                }
+                else {
+                    $this->setTitle(Mage::helper('prediction')->getHomeTitleVisitor());
+                }
             }
 
             $this->_listingMedium = 'recommended';
@@ -19,7 +26,7 @@
         {
             if (is_null($this->_productCollection)) {
                 $data = array();
-                $data['num'] = 5;
+                $data['num'] = (int) Mage::helper('prediction')->getNoOfRecommendations(Compunnel_Prediction_Helper_Abstract::RECOMMENDATION_LOCATION_HOME);
                 if (Mage::getSingleton('customer/session')->isLoggedIn()) {
                     $customerData = Mage::getSingleton('customer/session')->getCustomer();
                     $data['user'] = $customerData->getId();

@@ -16,6 +16,11 @@
 				<class>Compunnel_Prediction_Block</class>
 			</prediction>
 		</blocks>
+        <models>
+            <prediction>
+                <class>Compunnel_Prediction_Model</class>
+            </prediction>
+        </models>
 	</global>
 	<frontend>
 		<layout>
@@ -34,5 +39,23 @@
 				</args>
 			</prediction>
 		</routers>
+        <events>
+            <controller_action_predispatch>
+                <observers>
+                    <prediction_controller_action_predispatch_handler>
+                        <class>prediction/visitor</class>
+                        <method>initByRequest</method>
+                    </prediction_controller_action_predispatch_handler>
+                </observers>
+            </controller_action_predispatch>
+            <controller_action_postdispatch>
+                <observers>
+                    <prediction_controller_action_postdispatch_handler>
+                        <class>prediction/visitor</class>
+                        <method>saveByRequest</method>
+                    </prediction_controller_action_postdispatch_handler>
+                </observers>
+            </controller_action_postdispatch>
+        </events>
 	</frontend>
 </config>
