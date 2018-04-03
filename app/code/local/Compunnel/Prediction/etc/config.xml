@@ -19,8 +19,24 @@
         <models>
             <prediction>
                 <class>Compunnel_Prediction_Model</class>
+                <resourceModel>prediction_resource</resourceModel>
             </prediction>
+            <prediction_resource>
+                <class>Compunnel_Prediction_Model_Resource</class>
+                <entities>
+                    <visitor>
+                        <table>prediction_visitor</table>
+                    </visitor>
+                </entities>
+            </prediction_resource>
         </models>
+        <resources>
+            <prediction_setup>
+                <setup>
+                    <module>Compunnel_Prediction</module>
+                </setup>
+            </prediction_setup>
+        </resources>
 	</global>
 	<frontend>
 		<layout>

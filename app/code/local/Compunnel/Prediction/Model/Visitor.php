@@ -2,31 +2,14 @@
     class Compunnel_Prediction_Model_Visitor extends Mage_Core_Model_Abstract
     {
         protected $_skipRequestLogging = false;
-        protected $_logCondition;
         protected $_httpHelper;
-        protected $_config;
         protected $_session;
-
-        public function __construct(array $data = array())
-        {
-            $this->_httpHelper = !empty($data['http_helper']) ? $data['http_helper'] : Mage::helper('core/http');
-            $this->_config = !empty($data['config']) ? $data['config'] : Mage::getConfig();
-            $this->_logCondition = !empty($data['log_condition']) ? $data['log_condition'] : Mage::helper('log');
-            $this->_session = !empty($data['session']) ? $data['session'] : Mage::getSingleton('core/session');
-            parent::__construct($data);
-        }
 
         protected function _construct()
         {
-            $this->_init('log/visitor');
-            $userAgent = $this->_httpHelper->getHttpUserAgent();
-            $ignoreAgents = $this->_config->getNode('global/ignore_user_agents');
-            if ($ignoreAgents) {
-                $ignoreAgents = $ignoreAgents->asArray();
-                if (in_array($userAgent, $ignoreAgents)) {
-                    $this->_skipRequestLogging = true;
-                }
-            }
+            $this->_init('prediction/visitor');
+            $this->_httpHelper = Mage::helper('core/http');
+            $this->_session = Mage::getSingleton('core/session', array('name' => 'prediction'))->start();
         }
 
         protected function _getSession()
@@ -59,9 +42,8 @@
             if (!$visitorId) {
                 $this->initServerData();
                 $this->setIsNewVisitor(true);
-            }
-            if (!$visitorId || $this->isVisitorSessionNew()) {
-                Mage::dispatchEvent('visitor_init', array('visitor' => $this));
+                $this->setFirstVisitAt(now());
+                $this->save();
             }
             return $this;
         }
@@ -69,6 +51,8 @@
         public function saveByRequest($observer)
         {
             try {
+                $this->setLastVisitAt(now());
+                $this->save();
                 $this->_session->setVisitorData($this->getData());
             }
             catch (Exception $e) {
@@ -80,9 +64,10 @@
         public function isVisitorSessionNew()
         {
             $visitorData = $this->_session->getVisitorData();
-            if (is_array($visitorData) && isset($visitorData['is_new_visitor']) && $visitorData['is_new_visitor'] == 1) {
-                return true;
-            }
-            return false;
+        $visitorSessionId = null;
+        if (is_array($visitorData) && isset($visitorData['session_id'])) {
+            $visitorSessionId = $visitorData['session_id'];
+        }
+        return $this->_session->getSessionId() != $visitorSessionId;
         }
     }
