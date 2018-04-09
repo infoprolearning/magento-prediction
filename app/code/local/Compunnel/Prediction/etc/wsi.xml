@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<wsdl:definitions xmlns:typens="urn:{{var wsdl.name}}" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" name="{{var wsdl.name}}" targetNamespace="urn:{{var wsdl.name}}">
+    <wsdl:types>
+        <xsd:schema xmlns:xsd="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:{{var wsdl.name}}">
+            <xsd:complexType name="predictionEntityArray">
+                <xsd:sequence>
+                    <xsd:element minOccurs="0" maxOccurs="unbounded" name="complexObjectArray" type="typens:predictionEntity" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="predictionEntity">
+                <xsd:sequence>
+                    <xsd:element name="product_id" type="xsd:string"/>
+                    <xsd:element name="sku" type="xsd:string"/>
+                    <xsd:element name="name" type="xsd:string"/>
+                    <xsd:element name="set" type="xsd:string"/>
+                    <xsd:element name="type" type="xsd:string"/>
+                    <xsd:element name="category_ids" type="typens:ArrayOfString"/>
+                    <xsd:element name="website_ids" type="typens:ArrayOfString"/>
+                    <xsd:element name="short_description" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="status" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="url_key" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="url_path" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="visibility" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="price" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="special_price" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="special_from_date" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="special_to_date" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="tax_class_id" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="additional_attributes" type="typens:associativeArray" minOccurs="0"/>
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:complexType name="predictionSuggestionRequestAttributes">
+                <xsd:sequence>
+                    <xsd:element name="attributes" type="typens:ArrayOfString" minOccurs="0" />
+                    <xsd:element name="additional_attributes" type="typens:ArrayOfString" minOccurs="0" />
+                </xsd:sequence>
+            </xsd:complexType>
+            <xsd:element name="predictionSuggestionListRequestParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="sessionId" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="filters" type="typens:filters" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="store" type="xsd:string" />
+                        <xsd:element minOccurs="0" maxOccurs="1" name="attributes" type="typens:predictionSuggestionRequestAttributes" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+            <xsd:element name="predictionSuggestionListResponseParam">
+                <xsd:complexType>
+                    <xsd:sequence>
+                        <xsd:element minOccurs="1" maxOccurs="1" name="result" type="typens:predictionEntityArray" />
+                    </xsd:sequence>
+                </xsd:complexType>
+            </xsd:element>
+        </xsd:schema>
+    </wsdl:types>
+    <wsdl:message name="predictionSuggestionListRequest">
+        <wsdl:part name="parameters" element="typens:predictionSuggestionListRequestParam" />
+    </wsdl:message>
+    <wsdl:message name="predictionSuggestionListResponse">
+        <wsdl:part name="parameters" element="typens:predictionSuggestionListResponseParam" />
+    </wsdl:message>
+    <wsdl:portType name="{{var wsdl.handler}}PortType">
+        <wsdl:operation name="predictionSuggestionList">
+            <wsdl:documentation>Retrieve recommended products by filters</wsdl:documentation>
+            <wsdl:input message="typens:predictionSuggestionListRequest" />
+            <wsdl:output message="typens:predictionSuggestionListResponse" />
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="{{var wsdl.handler}}Binding" type="typens:{{var wsdl.handler}}PortType">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http" />
+        <wsdl:operation name="predictionSuggestionList">
+            <soap:operation soapAction="" />
+            <wsdl:input>
+                <soap:body use="literal" />
+            </wsdl:input>
+            <wsdl:output>
+                <soap:body use="literal" />
+            </wsdl:output>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="{{var wsdl.name}}Service">
+        <wsdl:port name="{{var wsdl.handler}}Port" binding="typens:{{var wsdl.handler}}Binding">
+            <soap:address location="{{var wsdl.url}}" />
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>

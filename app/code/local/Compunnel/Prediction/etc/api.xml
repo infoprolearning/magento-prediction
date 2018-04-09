@@ -1,0 +1,36 @@
+<?xml version="1.0"?>
+<config>
+    <api>
+        <resources>
+            <prediction_suggestion translate="label" module="prediction">
+                <model>prediction/suggestion_api</model>
+                <title>Recommendation Engine API</title>
+                <acl>prediction/suggestion</acl>
+                <methods>
+                    <list translate="title" module="prediction">
+                        <title>Get Suggestions</title>
+                        <method>items</method>
+                    </list>
+                </methods>
+            </prediction_suggestion>
+        </resources>
+        <resources_alias>
+            <suggestion>prediction_suggestion</suggestion>
+        </resources_alias>
+        <v2>
+            <resources_function_prefix>
+                <suggestion>predictionSuggestion</suggestion>
+            </resources_function_prefix>
+        </v2>
+        <acl>
+            <resources>
+                <prediction translate="title" module="prediction">
+                    <title>Recommendation Engine API</title>
+                    <suggestion translate="title" module="prediction">
+                        <title>Get Suggestions</title>
+                    </suggestion>
+                </prediction>
+            </resources>
+        </acl>
+    </api>
+</config>
