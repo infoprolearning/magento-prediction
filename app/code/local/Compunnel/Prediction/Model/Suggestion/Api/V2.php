@@ -11,9 +11,46 @@
             $apiHelper = Mage::helper('api');
             $filters = $apiHelper->parseFilters($filters, $this->_filtersMap);
 
+            $data = array();
+
             if (isset($filters['qty'])) {
-                $collection->setPageSize($filters['qty']);
+                $data['num'] = $filters['qty'];
             }
+            else {
+                $data['num'] = 5;
+            }
+
+            if (isset($filters['category_id'])) {
+            }
+            if (isset($filters['category_name'])) {
+            }
+            if (isset($filters['customer_id'])) {
+                $data['user'] = $filters['customer_id'];
+            }
+            if (isset($filters['customer_email'])) {
+                $customer = Mage::getModel('customer/customer')->loadByEmail($filters['customer_email']);
+                if ($customer->getId()) {
+                    $data['user'] = $customer->getId();
+                }
+            }
+
+            $result = Mage::helper('prediction')->makeRecommendationCall($data, $this->_getStoreId($store));
+            $results = json_decode($result, true);
+            if (isset($results['itemScores']) && !empty($results['itemScores'])) {
+                $apiProducts = array();
+                foreach ($results['itemScores'] as $key => $value) {
+                    $apiProducts[] = $value['item'];
+                }
+
+                $collection = Mage::getModel('catalog/product')->getCollection()
+                    ->addAttributeToFilter('entity_id', array('in' => $apiProducts))
+                    ->addStoreFilter($this->_getStoreId($store))
+                    ->addAttributeToSelect('name')
+                    ->setCurPage(1);;
+            }
+
+            $collection->setPageSize($data['num']);
+            $collection->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInCatalogIds());
 
             $additionalAttributes = array();
             if (!empty($attributes->attributes)) {
