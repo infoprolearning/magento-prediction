@@ -74,4 +74,16 @@
             </controller_action_postdispatch>
         </events>
 	</frontend>
+    <admin>
+        <routers>
+            <adminhtml>
+                <use>admin</use>
+                <args>
+                    <modules>
+                        <Compunnel_Prediction before="Mage_Adminhtml">Compunnel_Prediction_Adminhtml</Compunnel_Prediction>
+                    </modules>
+                </args>
+            </adminhtml>
+        </routers>
+    </admin>
 </config>

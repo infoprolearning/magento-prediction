@@ -5,7 +5,7 @@
 
         public function makeRecommendationCall($data, $storeId = '')
         {
-            if (!$this->isModuleEnabled($storeId)) {
+            if (!$this->isEngineEnabled($storeId)) {
                 return;
             }
             try {

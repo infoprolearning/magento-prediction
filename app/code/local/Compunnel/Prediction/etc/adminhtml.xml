@@ -15,8 +15,60 @@
                             </config>
                         </children>
                     </system>
+                    <prediction translate="title" module="prediction">
+                        <title>Recommender</title>
+                        <sort_order>100</sort_order>
+                        <children>
+                            <blacklist translate="title">
+                                <title>Blacklist Configuration</title>
+                                <children>
+                                    <blacklist_homepage translate="title">
+                                        <title>Homepage</title>
+                                    </blacklist_homepage>
+                                </children>
+                            </blacklist>
+                            <whitelist translate="title">
+                                <title>Whitelist Configuration</title>
+                                <children>
+                                    <whitelist_homepage translate="title">
+                                        <title>Homepage</title>
+                                    </whitelist_homepage>
+                                </children>
+                            </whitelist>
+                        </children>
+                    </prediction>
                 </children>
             </admin>
         </resources>
     </acl>
+    <menu>
+        <prediction translate="title" module="prediction">
+            <title>Recommender</title>
+            <sort_order>100</sort_order>
+            <children>
+                <blacklist translate="title" module="prediction">
+                    <title>Blacklist Configuration</title>
+                    <children>
+                        <blacklist_homepage translate="title" module="prediction">
+                            <title>Homepage</title>
+                            <action>adminhtml/prediction_blacklist_homepage</action>
+                            <sort_order>10</sort_order>
+                        </blacklist_homepage>
+                    </children>
+                    <sort_order>10</sort_order>
+                </blacklist>
+                <whitelist translate="title" module="prediction">
+                    <title>Whitelist Configuration</title>
+                    <children>
+                        <whitelist_homepage translate="title" module="prediction">
+                            <title>Homepage</title>
+                            <action>adminhtml/prediction_whitelist_homepage</action>
+                            <sort_order>10</sort_order>
+                        </whitelist_homepage>
+                    </children>
+                    <sort_order>20</sort_order>
+                </whitelist>
+            </children>
+        </prediction>
+    </menu>
 </config>

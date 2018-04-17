@@ -3,7 +3,7 @@
     {
         const RECOMMENDATION_LOCATION_HOME = 'home_recommendations';
 
-        public function isModuleEnabled($storeId = '')
+        public function isEngineEnabled($storeId = '')
         {
             return $this->_getAdminConfiguration('prediction/general/enabled', $storeId);
         }
