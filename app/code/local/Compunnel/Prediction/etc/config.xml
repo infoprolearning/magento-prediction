@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Compunnel_Prediction>
-			<version>1.0.0.0</version>
+			<version>1.0.0.2</version>
 		</Compunnel_Prediction>
 	</modules>
 	<global>
@@ -27,6 +27,12 @@
                     <visitor>
                         <table>prediction_visitor</table>
                     </visitor>
+                    <blacklist_rule>
+                        <table>prediction_blacklist_rule</table>
+                    </blacklist_rule>
+                    <blacklist_rule_product>
+                        <table>prediction_blacklist_rule_product</table>
+                    </blacklist_rule_product>
                 </entities>
             </prediction_resource>
         </models>
