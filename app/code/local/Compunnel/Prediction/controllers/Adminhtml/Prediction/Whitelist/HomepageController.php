@@ -17,6 +17,44 @@
             $this->_initAction()->renderLayout();
         }
 
+        public function newAction()
+        {
+            $this->_forward('edit');
+        }
+
+        public function editAction()
+        {
+            $this->_title($this->__('Recommendation Engine'))->_title($this->__('Homepage Whitelist Rules'));
+
+            $id = $this->getRequest()->getParam('id');
+            $model = Mage::getModel('prediction/whitelist_homepage');
+
+            if ($id) {
+                $model->load($id);
+                if (! $model->getRuleId()) {
+                    Mage::getSingleton('adminhtml/session')->addError(
+                        Mage::helper('prediction')->__('This rule no longer exists.')
+                        );
+                    $this->_redirect('*/*');
+                    return;
+                }
+            }
+
+            $this->_title($model->getRuleId() ? $model->getName() : $this->__('New Rule'));
+
+            $data = Mage::getSingleton('adminhtml/session')->getPageData(true);
+            if (!empty($data)) {
+                $model->addData($data);
+            }
+
+            Mage::register('current_prediction_whitelist_homepage_rule', $model);
+
+            $this->_initAction()->getLayout()->getBlock('prediction_whitelist_homepage_edit')->setData('action', $this->getUrl('*/prediction_whitelist_homepage/save'));
+
+            $breadcrumb = $id ? Mage::helper('prediction')->__('Edit Rule') : Mage::helper('prediction')->__('New Rule');
+            $this->_addBreadcrumb($breadcrumb, $breadcrumb)->renderLayout();
+        }
+
         protected function _isAllowed()
         {
             return Mage::getSingleton('admin/session')->isAllowed('prediction/whitelist/whitelist_homepage');

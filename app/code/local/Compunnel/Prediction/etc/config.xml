@@ -2,7 +2,7 @@
 <config>
 	<modules>
 		<Compunnel_Prediction>
-			<version>1.0.0.2</version>
+			<version>1.0.0.3</version>
 		</Compunnel_Prediction>
 	</modules>
 	<global>
@@ -33,6 +33,12 @@
                     <blacklist_rule_product>
                         <table>prediction_blacklist_rule_product</table>
                     </blacklist_rule_product>
+                    <whitelist_rule>
+                        <table>prediction_whitelist_rule</table>
+                    </whitelist_rule>
+                    <whitelist_rule_product>
+                        <table>prediction_whitelist_rule_product</table>
+                    </whitelist_rule_product>
                 </entities>
             </prediction_resource>
         </models>
@@ -92,4 +98,13 @@
             </adminhtml>
         </routers>
     </admin>
+    <adminhtml>
+        <layout>
+            <updates>
+                <prediction>
+                    <file>compunnel/prediction.xml</file>
+                </prediction>
+            </updates>
+        </layout>
+    </adminhtml>
 </config>
