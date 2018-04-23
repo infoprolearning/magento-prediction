@@ -8,6 +8,7 @@
             $this->setId('prediction_whitelist_homepage_grid');
             $this->setDefaultSort('name');
             $this->setDefaultDir('ASC');
+            $this->setUseAjax(true);
             $this->setSaveParametersInSession(true);
         }
 
@@ -66,6 +67,11 @@
 
             parent::_prepareColumns();
             return $this;
+        }
+
+        public function getGridUrl()
+        {
+            return $this->getUrl('*/*/grid', array('_current'=>true));
         }
 
         public function getRowUrl($row)

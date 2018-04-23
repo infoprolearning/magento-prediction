@@ -17,6 +17,12 @@
             $this->_initAction()->renderLayout();
         }
 
+        public function gridAction()
+        {
+            $this->loadLayout();
+            $this->renderLayout();
+        }
+
         public function newAction()
         {
             $this->_forward('edit');
@@ -27,7 +33,7 @@
             $this->_title($this->__('Recommendation Engine'))->_title($this->__('Homepage Whitelist Rules'));
 
             $id = $this->getRequest()->getParam('id');
-            $model = Mage::getModel('prediction/whitelist_homepage');
+            $model = Mage::getModel('prediction/whitelist_rule');
 
             if ($id) {
                 $model->load($id);

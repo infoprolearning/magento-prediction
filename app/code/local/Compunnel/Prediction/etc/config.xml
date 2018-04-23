@@ -107,4 +107,11 @@
             </updates>
         </layout>
     </adminhtml>
+    <default>
+        <prediction>
+            <general>
+                <new_user_lifetime>14400</new_user_lifetime>
+            </general>
+        </prediction>
+    </default>
 </config>

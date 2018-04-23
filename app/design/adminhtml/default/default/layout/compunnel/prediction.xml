@@ -5,9 +5,38 @@
             <block type="prediction/adminhtml_blacklist_homepage" name="prediction_blacklist_homepage"/>
         </reference>
     </adminhtml_prediction_blacklist_homepage_index>
+    <adminhtml_prediction_blacklist_homepage_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="prediction/adminhtml_blacklist_homepage_grid" name="prediction_blacklist_homepage.grid"/>
+        </block>
+    </adminhtml_prediction_blacklist_homepage_grid>
+    <adminhtml_prediction_blacklist_homepage_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="prediction/adminhtml_blacklist_homepage_edit" name="prediction_blacklist_homepage_edit"/>
+        </reference>
+    </adminhtml_prediction_blacklist_homepage_edit>
+
     <adminhtml_prediction_whitelist_homepage_index>
         <reference name="content">
             <block type="prediction/adminhtml_whitelist_homepage" name="prediction_whitelist_homepage"/>
         </reference>
     </adminhtml_prediction_whitelist_homepage_index>
+    <adminhtml_prediction_whitelist_homepage_grid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="prediction/adminhtml_whitelist_homepage_grid" name="prediction_whitelist_homepage.grid"/>
+        </block>
+    </adminhtml_prediction_whitelist_homepage_grid>
+    <adminhtml_prediction_whitelist_homepage_edit>
+        <reference name="head">
+            <action method="setCanLoadExtJs"><flag>1</flag></action>
+            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        </reference>
+        <reference name="content">
+            <block type="prediction/adminhtml_whitelist_homepage_edit" name="prediction_whitelist_homepage_edit"/>
+        </reference>
+    </adminhtml_prediction_whitelist_homepage_edit>
 </layout>

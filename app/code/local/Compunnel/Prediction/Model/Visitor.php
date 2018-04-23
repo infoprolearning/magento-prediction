@@ -64,10 +64,17 @@
         public function isVisitorSessionNew()
         {
             $visitorData = $this->_session->getVisitorData();
-        $visitorSessionId = null;
-        if (is_array($visitorData) && isset($visitorData['session_id'])) {
-            $visitorSessionId = $visitorData['session_id'];
-        }
-        return $this->_session->getSessionId() != $visitorSessionId;
+            $visitorSessionId = null;
+            if (is_array($visitorData) && isset($visitorData['session_id'])) {
+                $visitorSessionId = $visitorData['session_id'];
+            }
+
+            if ($this->_session->getSessionId() == $visitorSessionId) {
+                $firstVisitTime = $visitorData['first_visit_at'];
+                $visitorLifeTime = abs(strtotime(now()) - strtotime($firstVisitTime));
+
+                return $visitorLifeTime <= Mage::getStoreConfig('prediction/general/new_user_lifetime');
+            }
+            return true;
         }
     }

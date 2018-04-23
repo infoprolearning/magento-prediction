@@ -50,6 +50,14 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </access_key>
+                        <new_user_lifetime translate="label">
+                            <label>New user lifetime (sec.)</label>
+                            <frontend_type>text</frontend_type>
+                            <sort_order>40</sort_order>
+                            <show_in_default>1</show_in_default>
+                            <show_in_website>1</show_in_website>
+                            <show_in_store>0</show_in_store>
+                        </new_user_lifetime>
                     </fields>
                 </general>
                 <home_recommendations translate="label">
