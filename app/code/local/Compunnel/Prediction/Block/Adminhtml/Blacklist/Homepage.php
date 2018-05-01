@@ -7,8 +7,19 @@
             $this->_blockGroup = 'prediction';
             $this->_controller = 'adminhtml_blacklist_homepage';
             $this->_headerText = Mage::helper('prediction')->__('Blacklist Rules');
-            $this->_addButtonLabel = Mage::helper('prediction')->__('Add New Rule');
             parent::__construct();
+
+            if ($this->_isAllowedAction('save')) {
+                $this->_updateButton('add', 'label', Mage::helper('prediction')->__('Add New Rule'));
+            }
+            else {
+                $this->_removeButton('add');
+            }
+        }
+
+        protected function _isAllowedAction($action)
+        {
+            return Mage::getSingleton('admin/session')->isAllowed('prediction/blacklist/blacklist_homepage/' . $action);
         }
 
     }

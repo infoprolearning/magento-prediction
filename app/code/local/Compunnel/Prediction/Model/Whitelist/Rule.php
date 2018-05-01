@@ -1,5 +1,5 @@
 <?php
-    class Compunnel_Prediction_Model_Whitelist_Rule extends Mage_Core_Model_Abstract
+    class Compunnel_Prediction_Model_Whitelist_Rule extends Compunnel_Prediction_Model_Rule
     {
 
         protected function _construct()

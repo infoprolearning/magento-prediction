@@ -7,4 +7,12 @@
             $this->_init('prediction/blacklist_rule_product');
         }
 
+        public function saveProductRelations($rule)
+        {
+            $data = $rule->getRelatedLinkData();
+            if (!is_null($data)) {
+                $this->_getResource()->saveProductLinks($rule, $data);
+            }
+        }
+
     }

@@ -9,12 +9,6 @@
             $this->_blockGroup = 'prediction';
 
             parent::__construct();
-
-            $this->_addButton('save_and_continue_edit', array(
-                'class'   => 'save',
-                'label'   => Mage::helper('prediction')->__('Save and Continue Edit'),
-                'onclick' => 'editForm.submit($(\'edit_form\').action + \'back/edit/\')',
-                ), 10);
         }
 
         public function getHeaderText()

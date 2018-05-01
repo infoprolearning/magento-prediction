@@ -5,31 +5,56 @@
             <block type="prediction/adminhtml_blacklist_homepage" name="prediction_blacklist_homepage"/>
         </reference>
     </adminhtml_prediction_blacklist_homepage_index>
+
     <adminhtml_prediction_blacklist_homepage_grid>
         <block type="core/text_list" name="root" output="toHtml">
             <block type="prediction/adminhtml_blacklist_homepage_grid" name="prediction_blacklist_homepage.grid"/>
         </block>
     </adminhtml_prediction_blacklist_homepage_grid>
+
     <adminhtml_prediction_blacklist_homepage_edit>
-        <reference name="head">
-            <action method="setCanLoadExtJs"><flag>1</flag></action>
-            <action method="setCanLoadRulesJs"><flag>1</flag></action>
+        <reference name="left">
+            <block type="prediction/adminhtml_blacklist_homepage_edit_tabs" name="prediction_blacklist_homepage_edit_tabs"></block>
         </reference>
         <reference name="content">
             <block type="prediction/adminhtml_blacklist_homepage_edit" name="prediction_blacklist_homepage_edit"/>
         </reference>
     </adminhtml_prediction_blacklist_homepage_edit>
 
+    <adminhtml_prediction_blacklist_homepage_related>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="prediction/adminhtml_blacklist_homepage_edit_tab_products" name="prediction.blacklist.homepage.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <reference name="related_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>prediction.blacklist.homepage.edit.tab.products</grid_block_name>
+                        <data_callback>getSelectedRelatedProducts</data_callback>
+                        <hidden_input_name>links[related]</hidden_input_name>
+                        <reload_param_name>products_related</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </adminhtml_prediction_blacklist_homepage_related>
+
+    <adminhtml_prediction_blacklist_homepage_relatedgrid>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="prediction/adminhtml_blacklist_homepage_edit_tab_products" name="prediction.blacklist.homepage.edit.tab.products"/>
+        </block>
+    </adminhtml_prediction_blacklist_homepage_relatedgrid>
+
     <adminhtml_prediction_whitelist_homepage_index>
         <reference name="content">
             <block type="prediction/adminhtml_whitelist_homepage" name="prediction_whitelist_homepage"/>
         </reference>
     </adminhtml_prediction_whitelist_homepage_index>
+
     <adminhtml_prediction_whitelist_homepage_grid>
         <block type="core/text_list" name="root" output="toHtml">
             <block type="prediction/adminhtml_whitelist_homepage_grid" name="prediction_whitelist_homepage.grid"/>
         </block>
     </adminhtml_prediction_whitelist_homepage_grid>
+
     <adminhtml_prediction_whitelist_homepage_edit>
         <reference name="head">
             <action method="setCanLoadExtJs"><flag>1</flag></action>
