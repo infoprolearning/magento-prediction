@@ -32,6 +32,8 @@
                     $data['user'] = $customerData->getId();
                 }
 
+                $data = Mage::getModel('prediction/blacklist_rule')->applyHomepageBlacklist($data);
+
                 $result = Mage::helper('prediction')->makeRecommendationCall($data);
 
                 $results = json_decode($result, true);

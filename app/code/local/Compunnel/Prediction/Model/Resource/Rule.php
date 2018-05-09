@@ -30,6 +30,13 @@
             return $this;
         }
 
+        protected function _afterLoad(Mage_Core_Model_Abstract $object)
+        {
+            $object->setData('customer_group_ids', (array)$this->getCustomerGroupIds($object->getId()));
+            $object->setData('store_ids', (array)$this->getStoreIds($object->getId()));
+            return parent::_afterLoad($object);
+        }
+
         public function getAssociatedEntityIds($ruleId, $entityType)
         {
             $entityInfo = $this->_getAssociatedEntityInfo($entityType);

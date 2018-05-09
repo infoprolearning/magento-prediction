@@ -18,4 +18,9 @@
             return $this->_linkInstance;
         }
 
+        public function applyHomepageBlacklist($data)
+        {
+            return $this->getLinkInstance()->applyHomepageBlacklist($data);
+        }
+
     }

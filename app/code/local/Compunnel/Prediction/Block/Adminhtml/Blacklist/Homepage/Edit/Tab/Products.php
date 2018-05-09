@@ -29,6 +29,28 @@
             return Mage::registry('current_prediction_blacklist_homepage_rule');
         }
 
+        protected function _addColumnFilterToCollection($column)
+        {
+            if ($column->getId() == 'in_products') {
+                $productIds = $this->_getSelectedProducts();
+                if (empty($productIds)) {
+                    $productIds = 0;
+                }
+                if ($column->getFilter()->getValue()) {
+                    $this->getCollection()->addFieldToFilter('entity_id', array('in' => $productIds));
+                }
+                else {
+                    if ($ruleIds) {
+                        $this->getCollection()->addFieldToFilter('entity_id', array('nin' => $productIds));
+                    }
+                }
+            }
+            else {
+                parent::_addColumnFilterToCollection($column);
+            }
+            return $this;
+        }
+
         protected function _prepareColumns()
         {
             $this->addColumn('in_products', array(
@@ -41,19 +63,19 @@
             ));
 
             $this->addColumn('entity_id', array(
-                'header' => Mage::helper('catalog')->__('ID'),
+                'header' => Mage::helper('prediction')->__('ID'),
                 'sortable' => true,
                 'width' => 60,
                 'index' => 'entity_id'
                 ));
 
             $this->addColumn('name', array(
-                'header' => Mage::helper('catalog')->__('Name'),
+                'header' => Mage::helper('prediction')->__('Name'),
                 'index' => 'name'
                 ));
 
             $this->addColumn('status', array(
-                'header' => Mage::helper('catalog')->__('Status'),
+                'header' => Mage::helper('prediction')->__('Status'),
                 'width' => 90,
                 'index' => 'status',
                 'type' => 'options',
@@ -61,7 +83,7 @@
                 ));
 
             $this->addColumn('visibility', array(
-                'header' => Mage::helper('catalog')->__('Visibility'),
+                'header' => Mage::helper('prediction')->__('Visibility'),
                 'width' => 90,
                 'index' => 'visibility',
                 'type' => 'options',
@@ -69,7 +91,7 @@
                 ));
 
             $this->addColumn('sku', array(
-                'header' => Mage::helper('catalog')->__('SKU'),
+                'header' => Mage::helper('prediction')->__('SKU'),
                 'width' => 80,
                 'index' => 'sku'
                 ));
@@ -84,17 +106,14 @@
 
         protected function _getSelectedProducts()
         {
-            $products = $this->getProductsRelated();
-            if (!is_array($products)) {
-                $products = array_keys($this->getSelectedProducts());
-            }
+            $products = $this->getSelectedProducts();
             return $products;
         }
 
         public function getSelectedProducts()
         {
-            $products = array();
-            return $products;
+            $ruleId = $this->_getRule()->getRuleId();
+            return Mage::getModel('prediction/blacklist_rule_product')->getProductsByRuleId($ruleId);
         }
 
     }

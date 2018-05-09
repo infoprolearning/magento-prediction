@@ -123,7 +123,7 @@
             );
 
             if (!Mage::app()->isSingleStoreMode()) {
-                $field = $fieldset->addField('store_id', 'multiselect', array(
+                $field = $fieldset->addField('store_ids', 'multiselect', array(
                     'name'      => 'store_ids[]',
                     'label'     => Mage::helper('prediction')->__('Store View'),
                     'title'     => Mage::helper('prediction')->__('Store View'),
@@ -135,7 +135,7 @@
                 $field->setRenderer($renderer);
             }
             else {
-                $fieldset->addField('store_id', 'hidden', array(
+                $fieldset->addField('store_ids', 'hidden', array(
                     'name'      => 'store_ids[]',
                     'value'     => Mage::app()->getStore(true)->getId()
                     ));

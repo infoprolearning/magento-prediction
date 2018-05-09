@@ -15,4 +15,17 @@
             }
         }
 
+        public function getProductsByRuleId($ruleId)
+        {
+            return $this->_getResource()->getProductsByRuleId($ruleId);
+        }
+
+        public function applyHomepageBlacklist($data, $store = 0)
+        {
+            if ($store == 0) {
+                $store = Mage::app()->getStore()->getId();
+            }
+            return $this->_getResource()->applyHomepageBlacklist($data, $store);
+        }
+
     }
