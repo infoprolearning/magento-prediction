@@ -1,0 +1,109 @@
+<?xml version="1.0"?>
+<widgets>
+    <prediction_suggestions type="prediction/widget_suggestions" translate="name description" module="prediction">
+        <name>Recommendation Block</name>
+        <description>Displays list of products using recommendation engine</description>
+        <parameters>
+            <page_size translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>5</value>
+                <label>Number of Products to display</label>
+                <type>text</type>
+            </page_size>
+            <usage_area translate="label">
+                <required>1</required>
+                <visible>1</visible>
+                <value>site</value>
+                <label>Location where widget will be used</label>
+                <type>select</type>
+                <values>
+                    <site translate="label">
+                        <value>site</value>
+                        <label>Over site</label>
+                    </site>
+                    <email translate="label">
+                        <value>email</value>
+                        <label>Inside emails</label>
+                    </email>
+                </values>
+            </usage_area>
+            <customer_email translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Customer's email source</label>
+                <type>text</type>
+                <depends>
+                    <usage_area>
+                        <value>email</value>
+                    </usage_area>
+                </depends>
+            </customer_email>
+            <depends_customer translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Results depend upon customer</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <depends>
+                    <usage_area>
+                        <value>site</value>
+                    </usage_area>
+                </depends>
+            </depends_customer>
+            <main_product translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>Main Product</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_product_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Product...</open>
+                        </button>
+                    </data>
+                </helper_block>
+            </main_product>
+            <return_self translate="label">
+                <required>0</required>
+                <visible>1</visible>
+                <label>Return main product in results</label>
+                <type>select</type>
+                <source_model>adminhtml/system_config_source_yesno</source_model>
+                <description><![CDATA[Only required if main product is chosen above. By default, set to No]]></description>
+            </return_self>
+            <blacklist_products translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>List of Blacklist products</label>
+                <type>text</type>
+                <description><![CDATA[Comma separated list of SKUs to blacklist]]></description>
+            </blacklist_products>
+            <whitelist_products translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>List of Whitelist products</label>
+                <type>text</type>
+                <description><![CDATA[Comma separated list of SKUs to whitelist]]></description>
+            </whitelist_products>
+            <category_pref translate="label">
+                <visible>1</visible>
+                <required>0</required>
+                <label>Category preference</label>
+                <type>label</type>
+                <helper_block>
+                    <type>adminhtml/catalog_category_widget_chooser</type>
+                    <data>
+                        <button translate="open">
+                            <open>Select Category...</open>
+                        </button>
+                    </data>
+                </helper_block>
+            </category_pref>
+            <unique_id>
+                <required>1</required>
+            </unique_id>
+        </parameters>
+    </prediction_suggestions>
+</widgets>
