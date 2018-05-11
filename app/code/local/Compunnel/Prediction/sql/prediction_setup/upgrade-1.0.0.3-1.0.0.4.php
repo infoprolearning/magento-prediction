@@ -1,12 +1,37 @@
 <?php
+    /**
+     * PHP version 5
+     *
+     * @category  Compunnel
+     * @package   Compunnel_Prediction
+     * @author    Prateek Agrawal <prateek.agarwal@compunnel.com>
+     * @copyright 2018 Compunnel (https://www.compunnel.com)
+     * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
+     * @link      https://bitbucket.org/prateekatcompunnel/apac-prediction
+    */
+
     $installer = $this;
     $connection = $installer->getConnection();
 
-    $rulesTable                 = $installer->getTable('prediction/blacklist_rule');
-    $storesTable                = $installer->getTable('core/store');
-    $customerGroupsTable        = $installer->getTable('customer/customer_group');
-    $rulesStoresTable           = $installer->getTable('prediction/blacklist_store');
-    $rulesCustomerGroupsTable   = $installer->getTable('prediction/blacklist_customer_group');
+    $rulesTable               = $installer->getTable(
+        'prediction/blacklist_rule'
+    );
+
+    $storesTable              = $installer->getTable(
+        'core/store'
+    );
+
+    $customerGroupsTable      = $installer->getTable(
+        'customer/customer_group'
+    );
+
+    $rulesStoresTable         = $installer->getTable(
+        'prediction/blacklist_store'
+    );
+
+    $rulesCustomerGroupsTable = $installer->getTable(
+        'prediction/blacklist_customer_group'
+    );
 
     $installer->startSetup();
 
@@ -35,15 +60,30 @@
                 'Store Id'
             )
             ->addIndex(
-                $installer->getIdxName('prediction/blacklist_store', array('rule_id')),
+                $installer->getIdxName(
+                    'prediction/blacklist_store',
+                    array(
+                        'rule_id'
+                    )
+                ),
                 array('rule_id')
             )
             ->addIndex(
-                $installer->getIdxName('prediction/blacklist_store', array('store_id')),
+                $installer->getIdxName(
+                    'prediction/blacklist_store',
+                    array(
+                        'store_id'
+                    )
+                ),
                 array('store_id')
             )
             ->addForeignKey(
-                $installer->getFkName('prediction/blacklist_store', 'rule_id', 'prediction/blacklist_rule', 'rule_id'),
+                $installer->getFkName(
+                    'prediction/blacklist_store',
+                    'rule_id',
+                    'prediction/blacklist_rule',
+                    'rule_id'
+                ),
                 'rule_id',
                 $rulesTable,
                 'rule_id',
@@ -51,7 +91,12 @@
                 Varien_Db_Ddl_Table::ACTION_CASCADE
             )
             ->addForeignKey(
-                $installer->getFkName('prediction/blacklist_store', 'store_id', 'core/store', 'store_id'),
+                $installer->getFkName(
+                    'prediction/blacklist_store',
+                    'store_id',
+                    'core/store',
+                    'store_id'
+                ),
                 'store_id',
                 $storesTable,
                 'store_id',
@@ -88,15 +133,30 @@
                 'Customer Group Id'
             )
             ->addIndex(
-                $installer->getIdxName('prediction/blacklist_customer_group', array('rule_id')),
+                $installer->getIdxName(
+                    'prediction/blacklist_customer_group',
+                    array(
+                        'rule_id'
+                    )
+                ),
                 array('rule_id')
             )
             ->addIndex(
-                $installer->getIdxName('prediction/blacklist_customer_group', array('customer_group_id')),
+                $installer->getIdxName(
+                    'prediction/blacklist_customer_group',
+                    array(
+                        'customer_group_id'
+                    )
+                ),
                 array('customer_group_id')
             )
             ->addForeignKey(
-                $installer->getFkName('prediction/blacklist_customer_group', 'rule_id', 'prediction/blacklist_rule', 'rule_id'),
+                $installer->getFkName(
+                    'prediction/blacklist_customer_group',
+                    'rule_id',
+                    'prediction/blacklist_rule',
+                    'rule_id'
+                ),
                 'rule_id',
                 $rulesTable,
                 'rule_id',
@@ -104,7 +164,12 @@
                 Varien_Db_Ddl_Table::ACTION_CASCADE
             )
             ->addForeignKey(
-                $installer->getFkName('prediction/blacklist_customer_group', 'customer_group_id', 'customer/customer_group', 'customer_group_id'),
+                $installer->getFkName(
+                    'prediction/blacklist_customer_group',
+                    'customer_group_id',
+                    'customer/customer_group',
+                    'customer_group_id'
+                ),
                 'customer_group_id',
                 $customerGroupsTable,
                 'customer_group_id',
