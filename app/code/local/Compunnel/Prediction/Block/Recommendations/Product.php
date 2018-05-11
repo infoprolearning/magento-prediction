@@ -1,4 +1,14 @@
 <?php
+/**
+ * PHP version 5
+ * 
+ * @category  Compunnel
+ * @package   Compunnel_Prediction
+ * @author    Prateek Agrawal <prateek.agarwal@compunnel.com>
+ * @copyright 2018 Compunnel (https://www.compunnel.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
+ * @link      https://bitbucket.org/prateekatcompunnel/apac-prediction
+ */
 class Compunnel_Prediction_Block_Recommendations_Product extends Compunnel_Prediction_Block_Recommendations_Abstract
 {
     protected function _construct()
@@ -13,11 +23,6 @@ class Compunnel_Prediction_Block_Recommendations_Product extends Compunnel_Predi
     {
         if (is_null($this->_productCollection) && Mage::registry('product')) {
             $data = array();
-            // if (Mage::getSingleton('customer/session')->isLoggedIn()) {
-            //     $customerData = Mage::getSingleton('customer/session')->getCustomer();
-            //     $data['user'] = $customerData->getId();
-            // }
-
             $product = Mage::registry('product');
 
             $itemId = $product->getId();
@@ -37,7 +42,10 @@ class Compunnel_Prediction_Block_Recommendations_Product extends Compunnel_Predi
                 $collection = Mage::getModel('catalog/product')->getCollection()
                     ->addAttributeToFilter('entity_id', array('in' => $apiProducts));
 
-                $collection->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInCatalogIds());
+                $collection->setVisibility(
+                    Mage::getSingleton('catalog/product_visibility')
+                        ->getVisibleInCatalogIds()
+                );
 
                 $collection = $this->_addProductAttributesAndPrices($collection)
                     ->addStoreFilter()

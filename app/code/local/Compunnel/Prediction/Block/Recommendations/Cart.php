@@ -1,4 +1,15 @@
 <?php
+/**
+ * PHP version 5
+ * 
+ * @category  Compunnel
+ * @package   Compunnel_Prediction
+ * @author    Prateek Agrawal <prateek.agarwal@compunnel.com>
+ * @copyright 2018 Compunnel (https://www.compunnel.com)
+ * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
+ * @link      https://bitbucket.org/prateekatcompunnel/apac-prediction
+ */
+
 class Compunnel_Prediction_Block_Recommendations_Cart extends Compunnel_Prediction_Block_Recommendations_Abstract
 {
     protected function _construct()

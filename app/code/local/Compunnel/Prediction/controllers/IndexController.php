@@ -8,7 +8,7 @@
  * @copyright 2018 Compunnel (https://www.compunnel.com)
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
  * @link      https://bitbucket.org/prateekatcompunnel/apac-prediction
-*/
+ */
 
 /**
  * Prediction index controller
