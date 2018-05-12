@@ -1,7 +1,7 @@
 <?php
 /**
  * PHP version 5
- * 
+ *
  * @category  Compunnel
  * @package   Compunnel_Prediction
  * @author    Prateek Agrawal <prateek.agarwal@compunnel.com>
