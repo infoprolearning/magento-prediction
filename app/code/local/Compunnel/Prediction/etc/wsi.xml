@@ -25,6 +25,7 @@
                     <xsd:element name="special_price" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="special_from_date" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="special_to_date" type="xsd:string" minOccurs="0"/>
+                    <xsd:element name="final_price" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="tax_class_id" type="xsd:string" minOccurs="0"/>
                     <xsd:element name="additional_attributes" type="typens:associativeArray" minOccurs="0"/>
                 </xsd:sequence>

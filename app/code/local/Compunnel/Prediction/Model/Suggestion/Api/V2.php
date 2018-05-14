@@ -9,12 +9,32 @@
  * @license   http://opensource.org/licenses/osl-3.0.php Open Software License
  * @link      https://bitbucket.org/prateekatcompunnel/apac-prediction
  */
+
+/**
+ * SOAP v1 adaptor with WSI compliance for Recommendation Engine
+ *
+ * @category Compunnel
+ * @package  Compunnel_Prediction
+ * @author   Prateek Agrawal <prateek.agarwal@compunnel.com>
+ * @license  http://opensource.org/licenses/osl-3.0.php Open Software License
+ * @link     https://bitbucket.org/prateekatcompunnel/apac-prediction
+ */
 class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_Model_Suggestion_Api
 {
+    /**
+     * SOAP v1 method with WSI compliance for retrieving suggestions from
+     * Prediction server
+     *
+     * @param array   $filters    input array of filters from Magento API call
+     * @param integer $store      Magento store ID
+     * @param object  $attributes List of additional attributes that are needed
+     *
+     * @return array
+     */
     public function items($filters = null, $store = null, $attributes = null)
     {
         $collection = Mage::getModel('catalog/product')->getCollection()
-            ->addStoreFilter($this->_getStoreId($store))
+            ->addStoreFilter($this->getStoreId($store))
             ->addAttributeToSelect('name')
             ->setCurPage(1);
 
@@ -25,8 +45,7 @@ class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_
 
         if (isset($filters['qty'])) {
             $data['num'] = $filters['qty'];
-        }
-        else {
+        } else {
             $data['num'] = 5;
         }
 
@@ -34,17 +53,18 @@ class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_
         }
         if (isset($filters['category_name'])) {
         }
-        if (isset($filters['customer_id'])) {
-            $data['user'] = $filters['customer_id'];
-        }
-        if (isset($filters['customer_email'])) {
-            $customer = Mage::getModel('customer/customer')->loadByEmail($filters['customer_email']);
-            if ($customer->getId()) {
-                $data['user'] = $customer->getId();
-            }
-        }
 
-        $result = Mage::helper('prediction')->makeRecommendationCall($data, $this->_getStoreId($store));
+        $data = $this->extractCustomerParameters($filters, $data);
+
+        $data = $this->extractProductParameters($filters, $data);
+
+        $data = $this->extractCartParameters($filters, $data);
+
+        $result = Mage::helper('prediction')
+            ->makeRecommendationCall(
+                $data,
+                $this->getStoreId($store)
+            );
         $results = json_decode($result, true);
         if (isset($results['itemScores']) && !empty($results['itemScores'])) {
             $apiProducts = array();
@@ -54,23 +74,32 @@ class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_
 
             $collection = Mage::getModel('catalog/product')->getCollection()
                 ->addAttributeToFilter('entity_id', array('in' => $apiProducts))
-                ->addStoreFilter($this->_getStoreId($store))
+                ->addStoreFilter($this->getStoreId($store))
                 ->addAttributeToSelect('name')
                 ->setCurPage(1);;
         }
 
         $collection->setPageSize($data['num']);
-        $collection->setVisibility(Mage::getSingleton('catalog/product_visibility')->getVisibleInCatalogIds());
+        $collection->setVisibility(
+            Mage::getSingleton('catalog/product_visibility')
+                ->getVisibleInCatalogIds()
+        );
 
         $additionalAttributes = array();
         if (!empty($attributes->attributes)) {
-            $additionalAttributes = array_merge($additionalAttributes, $attributes->attributes);
+            $additionalAttributes = array_merge(
+                $additionalAttributes,
+                $attributes->attributes
+            );
         }
 
         $result = array();
         $additionalData = array();
         foreach ($collection as $product) {
-            $product = $this->initializeProduct($product->getId(), $this->_getStoreId($store));
+            $product = $this->initializeProduct(
+                $product->getId(),
+                $this->getStoreId($store)
+            );
             $result[] = array(
                 'product_id'        => $product->getId(),
                 'sku'               => $product->getSku(),
@@ -88,6 +117,7 @@ class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_
                 'special_price'     => $product->getSpecialPrice(),
                 'special_from_date' => $product->getSpecialFromDate(),
                 'special_to_date'   => $product->getSpecialToDate(),
+                'final_price'       => $product->getFinalPrice(),
                 'tax_class_id'      => $product->getTaxClassId()
                 );
             if (!empty($additionalAttributes)) {
@@ -106,8 +136,12 @@ class Compunnel_Prediction_Model_Suggestion_Api_V2 extends Compunnel_Prediction_
                 $_additionalAttributeCounter = 0;
                 foreach ($additionalData as $_key => $_value) {
                     if ($value['product_id'] == $_value['product_id']) {
-                        $result[$key]['additional_attributes'][$_additionalAttributeCounter]['key'] = $_value['key'];
-                        $result[$key]['additional_attributes'][$_additionalAttributeCounter]['value'] = $_value['value'];
+                        $result[$key]['additional_attributes'] = array(
+                            $_additionalAttributeCounter => array(
+                                'key'   => $_value['key'],
+                                'value' => $_value['value']
+                            )
+                        );
                         $_additionalAttributeCounter++;
                     }
                 }
