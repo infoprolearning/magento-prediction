@@ -22,8 +22,6 @@
 
 class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstract
 {
-    const RECOMMENDATION_PORT   = '8000';
-    const EVENT_PORT            = '7070';
 
     public function makeRecommendationCall($data, $storeId = '')
     {
@@ -31,6 +29,12 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
             return;
         }
         try {
+            $additionalData = $this->getAdditionalData();
+
+            $requestPacket = array();
+            $requestPacket['requestdata'] = $data;
+            $requestPacket['additional'] = $additionalData;
+
             $curlObject = new Varien_Http_Adapter_Curl();
             $config = array(
                 'timeout' => 10,
@@ -39,46 +43,18 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
             $curlObject->setConfig($config);
             $headers = array();
             $headers[] = "Content-Type: application/json";
-
             $curlObject->write(
                 Zend_Http_Client::POST,
-                $this->getRecommendationUrl($storeId),
+                $this->getApiUrl($storeId),
                 '1.1',
                 $headers,
-                json_encode($data)
+                json_encode($requestPacket, JSON_UNESCAPED_SLASHES)
             );
             $result = $curlObject->read();
-            $curlObject->close();
-            return $result;
-        }
-        catch(Exception $e) {
-            Mage::logException($e);
-        }
-    }
 
-    public function postEventData($data, $storeId)
-    {
-        if (!$this->isEngineEnabled($storeId)) {
-            return;
-        }
-        try {
-            $curlObject = new Varien_Http_Adapter_Curl();
-            $config = array(
-                'timeout' => 10,
-                'header' => false
-                );
-            $curlObject->setConfig($config);
-            $headers = array();
-            $headers[] = "Content-Type: application/json";
+            Mage::log(json_encode($requestPacket, JSON_UNESCAPED_SLASHES), null, 'prediction.log');
+            Mage::log($result, null, 'prediction.log');
 
-            $curlObject->write(
-                Zend_Http_Client::POST,
-                $this->getEventUrl($storeId),
-                '1.1',
-                $headers,
-                json_encode($data)
-            );
-            $result = $curlObject->read();
             $curlObject->close();
             return $result;
         }
@@ -90,22 +66,6 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
     public function isVisitorNew()
     {
         return Mage::getSingleton('prediction/visitor')->isVisitorSessionNew();
-    }
-
-    protected function getRecommendationUrl($storeId = '')
-    {
-        return $this->getEngineUrl($storeId) .
-            ':' .
-            self::RECOMMENDATION_PORT .
-            '/queries.json';
-    }
-
-    protected function getEventUrl($storeId = '')
-    {
-        return $this->getEngineUrl($storeId) .
-            ':' .
-            self::EVENT_PORT .
-            '/queries.json';
     }
 
     public function getNoOfRecommendations($location, $storeId = '')

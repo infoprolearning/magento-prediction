@@ -34,22 +34,22 @@
                             <show_in_website>1</show_in_website>
                             <show_in_store>1</show_in_store>
                         </enabled>
-                        <engine_url translate="label">
-                            <label>Engine URL</label>
+                        <api_url translate="label">
+                            <label>Public API URL</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>20</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </engine_url>
-                        <access_key translate="label">
-                            <label>Application Access Key</label>
+                            <show_in_store>0</show_in_store>
+                        </api_url>
+                        <event_url translate="label">
+                            <label>Public Event Server</label>
                             <frontend_type>text</frontend_type>
                             <sort_order>30</sort_order>
                             <show_in_default>1</show_in_default>
                             <show_in_website>1</show_in_website>
-                            <show_in_store>1</show_in_store>
-                        </access_key>
+                            <show_in_store>0</show_in_store>
+                        </event_url>
                         <new_user_lifetime translate="label">
                             <label>New user lifetime (sec.)</label>
                             <frontend_type>text</frontend_type>

@@ -16,5 +16,13 @@ class Compunnel_Prediction_Model_Whitelist_Rule extends Compunnel_Prediction_Mod
     {
         $this->_init('prediction/whitelist_rule');
     }
+    public function getLinkInstance()
+    {
+        if (!$this->_linkInstance) {
+            $this->_linkInstance = Mage::getSingleton('prediction/whitelist_rule_product');
+        }
+
+        return $this->_linkInstance;
+    }
 
 }

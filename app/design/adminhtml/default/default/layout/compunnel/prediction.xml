@@ -60,8 +60,26 @@
             <action method="setCanLoadExtJs"><flag>1</flag></action>
             <action method="setCanLoadRulesJs"><flag>1</flag></action>
         </reference>
+        <reference name="left">
+            <block type="prediction/adminhtml_whitelist_homepage_edit_tabs" name="prediction_whitelist_homepage_edit_tabs"></block>
+        </reference>
         <reference name="content">
             <block type="prediction/adminhtml_whitelist_homepage_edit" name="prediction_whitelist_homepage_edit"/>
         </reference>
     </adminhtml_prediction_whitelist_homepage_edit>
+    <adminhtml_prediction_whitelist_homepage_related>
+        <block type="core/text_list" name="root" output="toHtml">
+            <block type="prediction/adminhtml_whitelist_homepage_edit_tab_products" name="prediction.whitelist.homepage.edit.tab.products"/>
+            <block type="adminhtml/widget_grid_serializer" name="related_grid_serializer">
+                <reference name="related_grid_serializer">
+                    <action method="initSerializerBlock">
+                        <grid_block_name>prediction.whitelist.homepage.edit.tab.products</grid_block_name>
+                        <data_callback>getSelectedRelatedProducts</data_callback>
+                        <hidden_input_name>links[related]</hidden_input_name>
+                        <reload_param_name>products_related</reload_param_name>
+                    </action>
+                </reference>
+            </block>
+        </block>
+    </adminhtml_prediction_whitelist_homepage_related>
 </layout>

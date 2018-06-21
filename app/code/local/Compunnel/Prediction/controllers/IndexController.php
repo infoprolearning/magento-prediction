@@ -51,6 +51,20 @@ class Compunnel_Prediction_IndexController extends Mage_Core_Controller_Front_Ac
     }
 
     /**
+     * Handler to ajax calls from store front-end for events
+     *
+     * @return void
+     */
+    public function eventAction()
+    {
+        if ($this->getRequest()->isPost()) {
+            $params = $this->getRequest()->getParams();
+            Mage::helper('prediction/event')->processNewEvent($params);
+        }
+        return;
+    }
+
+    /**
      * Initialize current product
      *
      * @return object

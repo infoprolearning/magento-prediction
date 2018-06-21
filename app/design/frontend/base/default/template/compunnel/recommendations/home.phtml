@@ -56,14 +56,20 @@
                             <?php echo $this->getPriceHtml($_product, true, $this->getPriceSuffix()); ?>
                             <div class="actions">
                                 <?php if($_product->isSaleable()): ?>
+                                    <?php
+                                        $additionalParams = array(
+                                            "source" => "recommendation",
+                                            "location" => "home"
+                                        );
+                                    ?>
                                     <?php if($publishstamp > $currentstamp): ?>
-                                        <button type="button" title="<?php echo $this->__('Pre Order'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product); ?>')">
+                                        <button type="button" title="<?php echo $this->__('Pre Order'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, $additionalParams); ?>')">
                                             <span>
                                                 <span><?php echo $this->__('Pre Order'); ?></span>
                                             </span>
                                         </button>
                                     <?php else: ?>
-                                        <button type="button" title="<?php echo $this->__('Add to Cart'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product); ?>')">
+                                        <button type="button" title="<?php echo $this->__('Add to Cart'); ?>" class="button btn-cart" onclick="setLocation('<?php echo $this->getAddToCartUrl($_product, $additionalParams); ?>')">
                                             <span>
                                                 <span><?php echo $this->__('Add to Cart'); ?></span>
                                             </span>

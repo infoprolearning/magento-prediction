@@ -40,31 +40,24 @@ class Compunnel_Prediction_Helper_Abstract extends Mage_Core_Helper_Abstract
     }
 
     /**
-     * Get public URL of recommendation engine
+     * Get public API URL from back office
      *
      * @param integer $storeId numerical ID of Magento store
      *
      * @return string
      */
-    public function getEngineUrl($storeId = '')
+    public function getApiUrl($storeId = '')
     {
         return $this->_getAdminConfiguration(
-            'prediction/general/engine_url',
+            'prediction/general/api_url',
             $storeId
         );
     }
 
-    /**
-     * Get identifier of app deployed on recommendation engine
-     *
-     * @param integer $storeId numerical ID of Magento store
-     *
-     * @return string
-     */
-    public function getAppId($storeId = '')
+    public function getEventUrl($storeId = '')
     {
         return $this->_getAdminConfiguration(
-            'prediction/general/access_key',
+            'prediction/general/event_url',
             $storeId
         );
     }
@@ -147,4 +140,34 @@ class Compunnel_Prediction_Helper_Abstract extends Mage_Core_Helper_Abstract
         }
         return Mage::getStoreConfig($path, $storeId);
     }
+
+    /**
+     * Get information of current processing request via SERVER variable
+     *
+     * @return array
+     */
+    public function getAdditionalData()
+    {
+        $data = array();
+        $data['QUERY_STRING'] = $_SERVER['QUERY_STRING'];
+        $data['REQUEST_METHOD'] = $_SERVER['REQUEST_METHOD'];
+        $data['REQUEST_URI'] = $_SERVER['REQUEST_URI'];
+        $data['REMOTE_ADDR'] = $_SERVER['REMOTE_ADDR'];
+        $data['REMOTE_PORT'] = $_SERVER['REMOTE_PORT'];
+        $data['SERVER_ADDR'] = $_SERVER['SERVER_ADDR'];
+        $data['SERVER_PORT'] = $_SERVER['SERVER_PORT'];
+        $data['HTTP_REFERER'] = $_SERVER['HTTP_REFERER'];
+        $data['HTTP_USER_AGENT'] = $_SERVER['HTTP_USER_AGENT'];
+        $data['HTTP_X_REQUESTED_WITH'] = $_SERVER['HTTP_X_REQUESTED_WITH'];
+        $data['HTTP_X_FORWARDED_FOR'] = $_SERVER['HTTP_X_FORWARDED_FOR'];
+        $data['HTTP_X_FORWARDED_PORT'] = $_SERVER['HTTP_X_FORWARDED_PORT'];
+
+        foreach ($data as $key => $value) {
+            if ($value == '') {
+                unset($data[$key]);
+            }
+        }
+        return $data;
+    }
+
 }

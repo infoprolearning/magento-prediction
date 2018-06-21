@@ -14,11 +14,11 @@ class Compunnel_Prediction_Block_Adminhtml_Whitelist_Homepage_Edit extends Mage_
 
     public function __construct()
     {
+
         $this->_objectId = 'id';
         $this->_controller = 'adminhtml_whitelist_homepage';
-
+        $this->_blockGroup = 'prediction';
         parent::__construct();
-
         $this->_addButton('save_and_continue_edit', array(
             'class'   => 'save',
             'label'   => Mage::helper('prediction')->__('Save and Continue Edit'),
