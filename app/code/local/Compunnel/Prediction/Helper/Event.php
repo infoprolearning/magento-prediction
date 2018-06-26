@@ -42,10 +42,8 @@ class Compunnel_Prediction_Helper_Event extends Compunnel_Prediction_Helper_Abst
             $requestPacket = array();
 
             $requestPacket['event_type'] = $data['event'];
-            unset($data['event']);
 
             $requestPacket['source'] = $data['source'];
-            Mage::log(var_dump($requestPacket['source']), null, 'prediction.log');
             if ($requestPacket['source'] == '') {
                 $requestPacket['source'] = 'normal';
             }
@@ -80,6 +78,7 @@ class Compunnel_Prediction_Helper_Event extends Compunnel_Prediction_Helper_Abst
             Mage::log($this->getEventUrl($storeId), null, 'prediction.log');
             $result = $curlObject->read();
             $curlObject->close();
+            Mage::log($result, null, 'prediction.log');
             return $result;
         }
         catch(Exception $e) {

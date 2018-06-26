@@ -90,6 +90,14 @@
                     </prediction_controller_action_postdispatch_handler>
                 </observers>
             </controller_action_postdispatch>
+            <checkout_cart_add_product_complete>
+                <observers>
+                    <prediction_checkout_cart_add_product_complete_handler>
+                        <class>prediction/observer</class>
+                        <method>recordAddToCart</method>
+                    </prediction_checkout_cart_add_product_complete_handler>
+                </observers>
+            </checkout_cart_add_product_complete>
         </events>
 	</frontend>
     <admin>
