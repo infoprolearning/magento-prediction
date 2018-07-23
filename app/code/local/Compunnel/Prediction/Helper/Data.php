@@ -35,6 +35,11 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
             $requestPacket['requestdata'] = $data;
             $requestPacket['additional'] = $additionalData;
 
+            $encRequestData = Mage::helper('prediction/crypto')->encrypt(json_encode($requestPacket, JSON_UNESCAPED_SLASHES));
+            $encRequestPacket = array(
+                'data' => $encRequestData
+            );
+
             $curlObject = new Varien_Http_Adapter_Curl();
             $config = array(
                 'timeout' => 10,
@@ -48,11 +53,11 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
                 $this->getApiUrl($storeId),
                 '1.1',
                 $headers,
-                json_encode($requestPacket, JSON_UNESCAPED_SLASHES)
+                json_encode($encRequestPacket, JSON_UNESCAPED_SLASHES)
             );
             $result = $curlObject->read();
 
-            Mage::log(json_encode($requestPacket, JSON_UNESCAPED_SLASHES), null, 'prediction.log');
+            Mage::log(json_encode($encRequestPacket, JSON_UNESCAPED_SLASHES), null, 'prediction.log');
             Mage::log($result, null, 'prediction.log');
 
             $curlObject->close();
