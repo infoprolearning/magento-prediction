@@ -27,6 +27,8 @@ class Compunnel_Prediction_Helper_Crypto extends Mage_Core_Helper_Abstract
 
     private $secretKey;
     private $iv;
+    private $encryptedMessage;
+    private $hmac;
 
     public function encrypt($data)
     {
@@ -43,19 +45,46 @@ class Compunnel_Prediction_Helper_Crypto extends Mage_Core_Helper_Abstract
         );
     }
 
+    public function decrypt($data)
+    {
+        $this->initializeParameters();
+        $this->breakDownResponse($data);
+        $decryptedMessage = '';
+        if ($this->messageAuthenticated()) {
+            $decryptedMessage = openssl_decrypt($this->encryptedMessage, self::ENCRYPTION_ALGORITHM, $this->secretKey, 0, $this->iv);
+        }
+        return $decryptedMessage;
+    }
+
+    private function breakDownResponse($data)
+    {
+        $messageParts = explode(":", $data);
+        $this->iv = base64_decode($messageParts[1]);
+        $this->encryptedMessage = $messageParts[2];
+        $this->hmac = base64_decode($messageParts[0]);
+    }
+
+    private function messageAuthenticated()
+    {
+        $calculatedHmac = $this->hmac(base64_encode($this->iv) . ":" . $this->encryptedMessage, true);
+        if ($calculatedHmac == $this->hmac) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+
     private function initializeParameters()
     {
         $mcryptIvSize = mcrypt_get_iv_size(MCRYPT_RIJNDAEL_128, MCRYPT_MODE_CBC);
         $rawIv = mcrypt_create_iv($mcryptIvSize, MCRYPT_DEV_URANDOM);
         $this->iv = bin2hex($rawIv);
         $this->iv = substr($this->iv, 0, 16);
-        Mage::log($this->iv, null, 'prediction.log');
         $this->secretKey = '646959716559664a646959716559664a';
-        Mage::log($this->secretKey, null, 'prediction.log');
     }
 
-    private function hmac($message)
+    private function hmac($message, $rawOutput = true)
     {
-        return hash_hmac(self::HASH_ALGORITHM, $message, $this->secretKey, true);
+        return hash_hmac(self::HASH_ALGORITHM, $message, $this->secretKey, $rawOutput);
     }
 }

@@ -25,8 +25,9 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
 
     public function makeRecommendationCall($data, $storeId = '')
     {
+        $recommendatationCallResponse = '';
         if (!$this->isEngineEnabled($storeId)) {
-            return;
+            return $recommendatationCallResponses;
         }
         try {
             $additionalData = $this->getAdditionalData();
@@ -56,16 +57,19 @@ class Compunnel_Prediction_Helper_Data extends Compunnel_Prediction_Helper_Abstr
                 json_encode($encRequestPacket, JSON_UNESCAPED_SLASHES)
             );
             $result = $curlObject->read();
-
-            Mage::log(json_encode($encRequestPacket, JSON_UNESCAPED_SLASHES), null, 'prediction.log');
-            Mage::log($result, null, 'prediction.log');
-
             $curlObject->close();
-            return $result;
+            if($this->isJson($result)) {
+                $responseDataDecoded = json_decode($result, true);
+                if (isset($responseDataDecoded['body'])) {
+                    $decResponseData = Mage::helper('prediction/crypto')->decrypt($responseDataDecoded['body']);
+                    return $decResponseData;
+                }
+            }
         }
         catch(Exception $e) {
             Mage::logException($e);
         }
+        return $recommendatationCallResponses;
     }
 
     public function isVisitorNew()

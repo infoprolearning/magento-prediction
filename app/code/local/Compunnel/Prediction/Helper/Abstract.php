@@ -170,4 +170,15 @@ class Compunnel_Prediction_Helper_Abstract extends Mage_Core_Helper_Abstract
         return $data;
     }
 
+    /**
+     * Check whether a given string is a valid JSON data
+     *
+     * @return bool
+     */
+    public function isJson($string)
+    {
+        json_decode($string);
+        return (json_last_error() == JSON_ERROR_NONE);
+    }
+
 }
